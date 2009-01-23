@@ -1,0 +1,52 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.55.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 a0c305f6e390a090db603b9272b59f556fea3e51 ChangeLog
+SHA1 e56f73a48b64797141d0af84c9e64765ff5f0b3f ChangeLog.xml
+SHA1 c72f1f63bb5e71d6dd7d9897cad0907ba9e2b4fc MANIFEST
+SHA1 391fe2f71ec057890e0c1f445507e298d1fd3d35 MANIFEST.SKIP
+SHA1 3955b263261074d44e69617db485a5f61c47ef5b META.yml
+SHA1 5d9d8660e927f048e87476e44ca64171897f6c6c Makefile.PL
+SHA1 baf95fcc76225ae4205cb6ffb3918994166fcc3a README
+SHA1 39fe9dd834f3b78adb83e94b22bb98f9b87019f0 bin/changelog2x
+SHA1 dab2c7502bb9872fdf8080f613c72d4a72d06b8c ex/README
+SHA1 ff2f5fa6b101cd84f3091944b4a00003d9923d1b ex/black-white.css
+SHA1 33192334c702b471ee8665f13f616a2714b00a6c ex/changelogml.css
+SHA1 dd428c6f500e57935af504cd235750b00fef3e0f lib/App/Changelog2x.pm
+SHA1 8385faaace3c4e0eee9fe475a04f30c5c58683eb lib/App/changelog2x/ChangeLogML.xsd
+SHA1 836daa37808f0c0a787b59e99e611c4dc1c802df lib/App/changelog2x/changelog2div.xslt
+SHA1 f939d59a6770b60786c39efe1fb7e07518042018 lib/App/changelog2x/changelog2dl.xslt
+SHA1 df7bcf6c1e36cf5ea75b3cf65825a8f7dc438a65 lib/App/changelog2x/changelog2html.xslt
+SHA1 53782a7bce2ad694480e099d7b312688b10f9fcb lib/App/changelog2x/changelog2htmlnewest.xslt
+SHA1 2766874f8a017cd1d10e9400a66b58c2c5fefbe1 lib/App/changelog2x/changelog2htmlversion.xslt
+SHA1 36742cd5562d357db7d130043c25fed0613e69d5 lib/App/changelog2x/changelog2text.xslt
+SHA1 585d121eb5879a7ed101a3367909c1bfe83e9c5a lib/App/changelog2x/changelog2textnewest.xslt
+SHA1 382213e62b08896fcad093eef00ba44741ebca39 lib/App/changelog2x/changelog2textversion.xslt
+SHA1 68777ce373109906dc5eb57960735a7be464e42e lib/App/changelog2x/changelog2ul.xslt
+SHA1 fe4e5bea11724cb8e4c6af3ecb6a80f7aaa941d2 lib/App/changelog2x/common-text.xslt
+SHA1 75a371804dffd257755b008be3794e11930b28b9 lib/App/changelog2x/common-xhtml.xslt
+SHA1 e53e6c059b1c897a61f226510ff8b1cccd17f1e2 lib/App/changelog2x/common.xslt
+SHA1 ea6e01130e5f56c14e846855f9199352ca45cc11 lib/App/changelog2x/svnxml2changes.xslt
+SHA1 f012fbfb261bf316dc1586aef5468f3bf46672bb t/00_load.t
+SHA1 6f189de8feb3295e256a3361282b13b093441b52 t/01_pod.t
+SHA1 c1198ea9f20d8ad1297e13a674dcaf5553e8ebec t/02_pod_coverage.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFJeSDV3Cp33jjp81URAoLNAJ9Vi4deO8uerLSa12BiFSRtJpVkXgCeK18k
+nzCgBUsll/iu5mPFET1bT70=
+=Bdmk
+-----END PGP SIGNATURE-----
