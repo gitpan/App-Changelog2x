@@ -31,6 +31,9 @@
 </xsl:text>
   </xsl:variable>
 
+  <!-- If the user provides a value for this, remove it from any paths -->
+  <xsl:param name="pathremove" select="''" />
+
   <xsl:template match="/">
     <xsl:apply-templates select="/log/logentry" />
   </xsl:template>
@@ -91,7 +94,14 @@
     <xsl:param name="revision" />
     <xsl:element name="file">
       <xsl:attribute name="path">
-        <xsl:value-of select="." />
+        <xsl:choose>
+          <xsl:when test="($pathremove != '') and starts-with(., $pathremove)">
+            <xsl:value-of select="substring(., string-length($pathremove)+1)" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="." />
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:attribute>
       <xsl:if test="@action != 'M'">
         <!--

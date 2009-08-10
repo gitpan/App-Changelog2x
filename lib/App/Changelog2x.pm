@@ -1,14 +1,12 @@
 ###############################################################################
 #
-# This file copyright (c) 2008 by Randy J. Ray, all rights reserved
+# This file copyright (c) 2008-2009 by Randy J. Ray, all rights reserved
 #
 # Copying and distribution are permitted under the terms of the Artistic
 # License 2.0 (http://www.opensource.org/licenses/artistic-license-2.0.php) or
 # the GNU LGPL (http://www.opensource.org/licenses/lgpl-license.php).
 #
 ###############################################################################
-#
-#   $Id: Changelog2x.pm 11 2009-01-22 09:13:16Z rjray $
 #
 #   Description:    A wrapper in the App::* space for the core functionality
 #                   provided by the changelog2x script.
@@ -37,8 +35,9 @@
 
 package App::Changelog2x;
 
-use 5.8.0;
+use 5.008;
 use strict;
+use warnings;
 use vars qw($VERSION $FORMAT $DEFAULT_XSLT_PATH);
 use subs qw(new version default_xslt_path default_date_format date_format
             xslt_path application_tokens format_date credits
@@ -54,7 +53,7 @@ use DateTime::Format::ISO8601;
 
 BEGIN
 {
-    $VERSION = '0.10';
+    $VERSION = '0.11';
 
     $DEFAULT_XSLT_PATH = (File::Spec->splitpath(__FILE__))[1];
     $DEFAULT_XSLT_PATH = File::Spec->catdir($DEFAULT_XSLT_PATH, 'changelog2x');
@@ -476,7 +475,10 @@ One special value is recognized: C<unix>. If C<date_format> is called with
 this value as a format string, a pre-defined format is used that emulates the
 UNIX C<date> command as closely as possible (but see L</CAVEATS> for notes
 on B<DateTime> limitations with regards to timezone names and the special
-patterns recognized in date format strings to try and work around this).
+patterns recognized in date format strings to try and work around this). A
+string formatted this way looks like this:
+
+    Mon Aug 10 09:21:46 -0700 2009
 
 =item xslt_path [DIRS]
 
@@ -517,7 +519,10 @@ XSLT processor.
 Produces a string listing the names and versions of all components used in
 the rendering of the ChangeLogML. This consists of:
 
-    app/ver, mod/ver, LibXML/ver, LibXSLT/ver, libxml/ver, libxslt/ver
+    app/ver, mod/ver, LibXML/ver, LibXSLT/ver,
+    libxml/ver, libxslt/ver ({ with | without } exslt)
+
+(line broken for clarity only, the string has no embedded newlines)
 
 where:
 
@@ -588,13 +593,13 @@ character class).
 
 If the value of this parameter matches the pattern C<^\w+$>, then the string
 is used to construct a path to a XSLT file. The file is assumed to be named
-C<changelog2I<string>.xslt>, and is looked for in the directory declared as
+"changelog2I<< string >>.xslt", and is looked for in the directory declared as
 the root for templates (see the C<xslt_path> and C<default_xslt_path>
 methods).
 
 If the parameter does not match the pattern, it is assumed to be a file name.
-If it is not an absolute path, it is looked for under the XSLT root
-directory. As a special case, if the path starts with a C<.> character, it
+If it is not an absolute path, it is searched for using the set of XSLT
+directories. As a special case, if the path starts with a C<.> character, it
 is not converted to an absolute path.
 
 Once the full path and name of the file has been determined, if it cannot be
@@ -632,6 +637,15 @@ then it is considered to already be an absolute path and is returned
 unchanged.
 
 =back
+
+=head1 CAVEATS
+
+The B<DateTime> package does not attempt to map timezone values to the old
+3-letter codes that were once the definitive representation of timezones.
+Because timezones are now much more granular in definition, a timezone offset
+cannot be canonically mapped to a specific name. The only timezone that can be
+canonically mapped is UTC. Thus, for now, timezones in dates are given as their
+offsets from UTC, unless the date is being rendered in UTC directly.
 
 =head1 SEE ALSO
 

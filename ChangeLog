@@ -5,7 +5,20 @@
 		from ChangeLogML to a variety of text-based and 
 		XHTML-based layouts.                            
 
-0.11	Thursday January 22, 2009, 01:16:00 AM -0800
+0.11	Monday August 10, 2009, 10:10:00 AM -0700
+
+	Transaction revision: 18
+	* bin/changelog2x
+	* lib/App/Changelog2x.pm
+	Added warnings pragma.                                          
+
+	Transaction revision: 19
+	* bin/changelog2x
+	* lib/App/Changelog2x.pm
+	Documentation clean-up and better specification of the required 
+	Perl version.                                                   
+
+0.10	Thursday January 22, 2009, 01:16:00 AM -0800
 
 	Transaction revision: 10
 	* Build.PL (added)
@@ -19,9 +32,9 @@
 	Initial release. All basic functionality for the changelog2x    
 	script and the App::Changelog2x module done.                    
 
-# Generated on Thursday January 22, 2009, 05:43:47 PM -0800
-# Using changelog2x/0.10, App::Changelog2x/0.10, XML::LibXML/1.69,             
-# XML::LibXSLT/1.68, libxml/2.6.31, libxslt/1.1.22 (with exslt)                
+# Generated on Monday August 10, 2009, 10:07:24 AM -0700
+# Using changelog2x/0.11, App::Changelog2x/0.11, XML::LibXML/1.69,             
+# XML::LibXSLT/1.68, libxml/2.6.32, libxslt/1.1.24 (with exslt)                
 # XSLT sources:
 #     $Id: changelog2text.xslt 8 2009-01-19 06:46:50Z rjray $
 #     $Id: common-text.xslt 8 2009-01-19 06:46:50Z rjray $

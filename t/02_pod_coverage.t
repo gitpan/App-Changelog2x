@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: 02_pod_coverage.t 11 2009-01-22 09:13:16Z rjray $
+# $Id: 02_pod_coverage.t 17 2009-01-24 10:38:38Z rjray $
 
 use Test::More;
 

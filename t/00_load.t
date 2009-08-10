@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: 00_load.t 11 2009-01-22 09:13:16Z rjray $
+# $Id: 00_load.t 17 2009-01-24 10:38:38Z rjray $
 
 use 5.008;
 use strict;

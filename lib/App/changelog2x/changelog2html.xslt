@@ -194,7 +194,7 @@
           Create a "table of contents" set of links to the releases, unless
           suppressed by the user.
         -->
-        <xsl:if test="$suppress_toc = 0">
+        <xsl:if test="$suppress_toc = ''">
           <div class="changelog-toc-div"><xsl:value-of select="$newline" />
             <xsl:for-each select="cl:changelog//cl:release">
               <xsl:sort select="@date" data-type="text" order="ascending" />

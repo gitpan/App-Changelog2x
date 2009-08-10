@@ -2,15 +2,13 @@
 
 ###############################################################################
 #
-# This file copyright (c) 2008 by Randy J. Ray, all rights reserved
+# This file copyright (c) 2008-2009 by Randy J. Ray, all rights reserved
 #
 # Copying and distribution are permitted under the terms of the Artistic
 # License 2.0 (http://www.opensource.org/licenses/artistic-license-2.0.php) or
 # the GNU LGPL (http://www.opensource.org/licenses/lgpl-license.php).
 #
 ###############################################################################
-#
-#   $Id: changelog2x 11 2009-01-22 09:13:16Z rjray $
 #
 #   Description:    A simple Perl script that uses XML::LibXSLT and other CPAN
 #                   modules to format a ChangeLogML file into some form of
@@ -32,8 +30,9 @@
 #
 ###############################################################################
 
-use 5.8.0;
+use 5.008;
 use strict;
+use warnings;
 use vars qw($dir $cmd $USAGE $VERSION %opts $app);
 use subs qw(formats_list);
 use constant STYLESHEET_OPTS => qw(notoc versions order css color javascript
@@ -49,7 +48,7 @@ use DateTime::Format::ISO8601;
 
 use App::Changelog2x;
 
-$VERSION = '0.10';
+$VERSION = '0.11';
 ($dir, $cmd) = (File::Spec->splitpath($0))[1, 2];
 $USAGE = "$cmd [ --input file ] [ --output file ] [ --format date-format ]
 \t[ --template template ] [ --templateroot dir ]
@@ -62,8 +61,8 @@ Where:
                              if this option not passed
 --output                   Name of file to write transformed content to, STDOUT
                              used if this option not passed
---format                   Alternate format to use for formatting the dates
-                             in release blocks
+--format (-f)              Alternate format to use for formatting the dates
+                             in release blocks, may be abbreviated to '-f'
 --template (-t)            The name of the template to use, option may be
                              abbreviated to '-t'
 --templateroot (-tr)       A directory to look for templates in, option may
@@ -79,7 +78,7 @@ Where:
 GetOptions(\%opts, qw(help|h
                       input=s
                       output=s
-                      format=s
+                      format|f=s
                       template|t=s
                       templateroot|tr=s@
                       headcontentfile|head=s
@@ -267,19 +266,21 @@ passed to the actual stylesheet processing:
 
 =over 4
 
-=item input FILE
+=item --input FILE
 
 If this option is passed, it specifies the ChangeLogML XML file to process. If
 the value of this string is C<->, or if the option is not passed at all, then
 the STDIN file-handle is used.
 
-=item output FILE
+=item --output FILE
 
 If this option is passed, it specifies the file to write the transformed
 content out to. If the value of this string is C<->, or if the option is not
 passed at all, then the STDOUT file-handle is used.
 
-=item format STRING
+=item --format STRING
+
+=item -f STRING
 
 This option specifies an alternate format pattern for the B<DateTime>
 C<strftime> method to use when formatting the dates in the C<< <release> >>
@@ -287,9 +288,11 @@ tags. Note that B<< DateTime->strftime >> formatting is sensitive to your
 locale setting. The format is also used for those output templates that
 include "generated on" comments.
 
-=item template NAME
+This option may be abbreviated as C<-f> for convenience.
 
-=item t NAME
+=item --template NAME
+
+=item -t NAME
 
 Specifies the XSLT template to use. This may be a filename path or a string.
 A "string" is defined as a value consisting of only alphanumeric characters
@@ -312,9 +315,9 @@ This option may be abbreviated as C<-t> for convenience. The default value of
 this option is C<html>. See L</"Template Option Values"> for the list of
 templates/stylesheets provided with the application, and what they produce.
 
-=item templateroot DIR
+=item --templateroot DIR
 
-=item tr DIR
+=item -tr DIR
 
 Specifies an alternative root directory for locating the XSLT templates
 (stylesheets). By default, the root directory is a sub-directory called
@@ -333,9 +336,9 @@ This option may be abbreviated as C<-tr> for convenience. It may be specified
 multiple times, with the search-order of the directories being the same order
 they're given on the command-line.
 
-=item headcontentfile FILE
+=item --headcontentfile FILE
 
-=item head FILE
+=item --head FILE
 
 This option allows the user to specify additional C<< <head> >>-block content
 as the contents of a file, in lieu of the C<headcontent> option below, under
@@ -347,11 +350,11 @@ command-line.
 If both this and C<headcontent> are passed, this option takes precedence. If
 the file name specified cannot be opened or read, an error is reported.
 
-This option may be abbreviated as C<-head> for convenience.
+This option may be abbreviated as C<--head> for convenience.
 
-=item bodycontentfile FILE
+=item --bodycontentfile FILE
 
-=item body FILE
+=item --body FILE
 
 This option allows the user to specify additional C<< <body> >>-block content
 as the contents of a file, in lieu of the C<bodycontent> option below, under
@@ -363,7 +366,7 @@ command-line.
 If both this and C<bodycontent> are passed, this option takes precedence. If
 the file name specified cannot be opened or read, an error is reported.
 
-This option may be abbreviated as C<-body> for convenience.
+This option may be abbreviated as C<--body> for convenience.
 
 =back
 
@@ -380,13 +383,13 @@ option-type.
 
 =over 4
 
-=item notoc (boolean) [ html ]
+=item --notoc (boolean) [ html ]
 
 This is a boolean option. If given, it disables the generation of the
 shortcut-links at the top of the full-page XHTML rendition of the ChangeLogML
 file.
 
-=item versions STRING [ div, dl, html, text, ul ]
+=item --versions STRING [ div, dl, html, text, ul ]
 
 A string that specifies which release-versions should be processed. By default,
 all C<< <release> >> blocks are processed. If this parameter is given, it
@@ -419,7 +422,7 @@ Any string that is I<not> C<first> or C<all> is assumed to be a list of
 versions. If it badly-formed, it will likely not match any of the release
 blocks, and none will be processed.
 
-=item order STRING [ div, dl, html, text, ul ]
+=item --order STRING [ div, dl, html, text, ul ]
 
 This parameter should be a string whose value is one of C<ascending> or
 C<descending>. It controls the order in which the release blocks are sorted
@@ -433,7 +436,7 @@ timezone-offsets could sort incorrectly, since the sorting would key off of
 the hours portion before taking the offsets into consideration. This is a
 limitation of XSL's sorting capabilities.
 
-=item class STRING [ htmlnewest, htmlversion ]
+=item --class STRING [ htmlnewest, htmlversion ]
 
 For the C<htmlnewest> and C<htmlversion> output templates, the overall XHTML
 content is much smaller than the other XHTML-oriented stylesheets. To this
@@ -444,7 +447,7 @@ C<htmlversion>, it is a C<< <span> >>. See the documentation below
 (L</"Template Option Values">) for the default class names for each of the
 templates.
 
-=item css URL [ html ]
+=item --css URL [ html ]
 
 Specifies a URL to be used as the basic CSS stylesheet when rendering a
 complete XHTML document. If given, a C<< <link> >> element is created in the
@@ -457,7 +460,7 @@ The only distinction between this parameter and the next one, is that this one
 will occur first in the C<< <head> >> block, and thus be first in the CSS
 cascade model.
 
-=item color URL [ html ]
+=item --color URL [ html ]
 
 As above, but this parameter is used to allow a second URL to be specified,
 one that will follow the previous one in the CSS cascade order. This allows
@@ -465,7 +468,7 @@ the user to have a "main" stylesheet with font, spacing, etc. declarations
 while also using this option to select between color schemes for text,
 backgrounds, etc. (hence the choice of C<color> as the option name).
 
-=item javascript URL [ html ]
+=item --javascript URL [ html ]
 
 Like the two CSS-related options above, this allows the specification of a URL
 to be included in the document head-section. Unlike the previous, this URL is
@@ -477,9 +480,9 @@ This element occurs I<after> any content specified in the C<headcontent> (or
 appliction option C<headcontentfile>) is included in the output. Thus, it can
 safely refer to any functions, etc. defined in that content.
 
-=item headcontent STRING [ html ]
+=item --headcontent STRING [ html ]
 
-=item bodycontent STRING [ html ]
+=item --bodycontent STRING [ html ]
 
 These options allow for the user to provide arbitrary content for the C<<
 <head> >> and/or C<< <body> >> sections of the XHTML document, when rendering
@@ -494,7 +497,7 @@ options, which are handled by the application before processing is handed off
 to B<XML::LibXSLT>. Also note that the file-oriented options to the
 application will override any values passed in via either of these options.
 
-=item xsltparam NAME=VALUE
+=item --xsltparam NAME=VALUE
 
 Allow for the user to pass additional parameters to the XSLT processing phase
 beyond those defined here. If you have written your own XSLT stylesheets to

@@ -1,6 +1,6 @@
 App::Changelog2x - Utilities to transform ChangeLogML using Perl
 
-Version: 0.10
+Version: 0.11
 
 WHAT IS IT
 
@@ -41,13 +41,13 @@ up for all CPAN-based distributions:
 
 CHANGES
 
-* Build.PL (added)
-* MANIFEST.SKIP (added)
-* bin/changelog2x (added)
-* ex/README (added)
-* lib/App/Changelog2x.pm (added)
-* t/00_load.t (added)
-* t/01_pod.t (added)
-* t/02_pod_coverage.t (added)
-Initial release. All basic functionality for the changelog2x    
-script and the App::Changelog2x module done.                    
+Transaction revision: 18
+* bin/changelog2x
+* lib/App/Changelog2x.pm
+Added warnings pragma.                                          
+
+Transaction revision: 19
+* bin/changelog2x
+* lib/App/Changelog2x.pm
+Documentation clean-up and better specification of the required 
+Perl version.                                                   
